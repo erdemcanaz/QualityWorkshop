@@ -4,7 +4,7 @@
 import random, os
 import matplotlib.pyplot as plt
 
-PARAM_NUMBER_OF_SAMPLES = 5
+PARAM_NUMBER_OF_SAMPLES = 500
 PARAM_M = -110
 PARAM_Y_0 = 3500
 PARAM_X_LIMITS = [0, 24]
