@@ -2,7 +2,7 @@ import os, math, random
 import numpy as np
 import itertools
 import matplotlib.pyplot as plt
-
+from matplotlib.colors import LinearSegmentedColormap
 
 PARAM_DATA_PATH_TO_IMPORT = 'linearly_seperated_data_500.txt'
 PARAM_X_LIMITS = [0, 24]
@@ -120,7 +120,7 @@ class MLP:
 
             if i % iteration_to_print == 0:  # Changed to print less frequently
                 print(f"Epoch: {i:6}, Succes (all): {self.__calculate_categorization_succes(distance_to_threshold=0.0):8.3f}, Succes (ignore 0.4-0.6): {self.__calculate_categorization_succes(distance_to_threshold=0.1):8.3f} Error: {epoch_error_sum/len(self.data):8.5f}, Weights: {self.weights}")
-                if show_plot: self.plot_prediction_space()
+                if show_plot: self.plot_prediction_space_mesh(pause_time=0.25)
 
             if epoch_error_sum / len(self.data) < error_threshold:
                 print(f"Training is completed at epoch {i} because the error is below the threshold.")
@@ -163,6 +163,12 @@ class MLP:
         else:
             return 0
         
+    def predict_real(self, daily_usage: float, rpm: float)->float:
+        z = self.weights["bias"] * 1 + self.weights["usage"] * daily_usage + self.weights["rpm"] * rpm
+        y = self.ReLU(z)
+
+        return y
+    
     def plot_prediction_space(self, x_limits: list[float, float] = None, y_limits: list[float, float] = None):
         daily_usage = np.linspace(PARAM_X_LIMITS[0], PARAM_X_LIMITS[1], 50)
         rpm = np.linspace(PARAM_Y_LIMITS[0], PARAM_Y_LIMITS[1], 50)
@@ -196,6 +202,45 @@ class MLP:
         plt.draw()  # Update the figure
         plt.pause(0.25)  # Pause briefly to allow
 
+    def plot_prediction_space_mesh(self, x_limits: list[float] = None, y_limits: list[float] = None, pause_time: float = 60):
+        plt.close('all')
+        daily_usage = np.linspace(PARAM_X_LIMITS[0], PARAM_X_LIMITS[1], 200)
+        rpm = np.linspace(PARAM_Y_LIMITS[0], PARAM_Y_LIMITS[1], 200)
+
+        # Create grid
+        X, Y = np.meshgrid(daily_usage, rpm)
+        Z = np.zeros_like(X)
+
+        # Predict values for each point in the grid
+        for i in range(X.shape[0]):
+            for j in range(X.shape[1]):
+                Z[i, j] = self.predict_real(X[i, j], Y[i, j])
+
+        # Define custom colormap
+        colors = [(0, 1, 0), (1, 1, 1), (1, 0, 0)]  # Green -> White -> Red
+        n_bins = 100  # Number of bins in the colormap
+        cmap_name = 'custom_heatmap'
+        cmap = LinearSegmentedColormap.from_list(cmap_name, colors, N=n_bins)
+
+        plt.ion()  # Turn on interactive mode
+        fig, ax = plt.subplots()  # Create new figure and axes
+        heatmap = ax.pcolormesh(X, Y, Z, cmap=cmap, shading='auto', vmin=0, vmax=1)
+        cbar = plt.colorbar(heatmap, ax=ax)
+        cbar.set_label('Prediction Value')
+
+        ax.set_xlabel('Günlük Kullanım (Saat)')
+        ax.set_ylabel('Motor RPM')
+        ax.set_title('Motor Bozulacak mı? Tahmini')
+
+        if x_limits:
+            ax.set_xlim(x_limits)
+        if y_limits:
+            ax.set_ylim(y_limits)
+
+        plt.draw()  # Update the figure
+        plt.pause(5)  # Pause briefly to allow
+
+
 pretrained_weights = {
     "workshop_bias": {'bias': -5, 'usage': 0.45, 'rpm': 0.0090},
     "11.07.2024_19_38": {'bias': -15.939309014984318, 'usage': 0.6011307820678724, 'rpm': 0.006601504978600123},
@@ -204,8 +249,7 @@ pretrained_weights = {
 
 }
 MLP_model = MLP(data, weights= pretrained_weights["workshop_bias"])
-MLP_model.train(epoch=int(1e7), learning_rate=0.0002, batch_size=32, error_threshold=0.01, momentum_factor=0.90, iteration_to_print=10, show_plot=True)
-
+MLP_model.train(epoch=int(1e7), learning_rate=0.0002, batch_size=32, error_threshold=0.01, momentum_factor=0.90, iteration_to_print=100, show_plot=True)
 
 
 
