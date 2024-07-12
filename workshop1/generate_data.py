@@ -4,7 +4,7 @@
 import random, os
 import matplotlib.pyplot as plt
 
-PARAM_NUMBER_OF_SAMPLES = 500
+PARAM_NUMBER_OF_SAMPLES = 501
 PARAM_M = -110
 PARAM_Y_0 = 3500
 PARAM_X_LIMITS = [0, 24]
@@ -33,9 +33,9 @@ red_patch = plt.Line2D([], [], color='red', marker='o', linestyle='None', marker
 blue_patch = plt.Line2D([], [], color='green', marker='o', linestyle='None', markersize=5, label='Bozulmadı')
 plt.legend(handles=[red_patch, blue_patch])
 plt.scatter(x_values, y_values, c=colors)
-plt.xlabel('Günlük Kullanım (Saat)')
-plt.ylabel('Motor RPM')
-plt.title('Motor Bozulma Verisi')
+plt.xlabel('Ortalama Günlük Çalışma Süresi (Saat)')
+plt.ylabel('Ortalam Dönüş Hızı (RPM)')
+plt.title('BESAN: AXL32 SERVO MOTOR BAKIM VERİSİ')
 plt.show()
 
 # Get the current script path
