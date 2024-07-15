@@ -245,11 +245,12 @@ pretrained_weights = {
     "workshop_bias": {'bias': -5, 'usage': 0.45, 'rpm': 0.0090},
     "11.07.2024_19_38": {'bias': -15.939309014984318, 'usage': 0.6011307820678724, 'rpm': 0.006601504978600123},
     "11.07.2024_19_54": {'bias': -28.612332064196746, 'usage': 0.8093490579957665, 'rpm': 0.006939621724616913},
-    "11.07.2024_21_56": {'bias': -53.106915838715764, 'usage': 1.6370307419016032, 'rpm': 0.016467756843615674}
+    "11.07.2024_21_56": {'bias': -53.106915838715764, 'usage': 1.6370307419016032, 'rpm': 0.016467756843615674},
+    "14.07.2024_16_12": {'bias': -56.010607669679146, 'usage': 1.7075714376573494, 'rpm': 0.016744436322848288}
 
 }
 MLP_model = MLP(data, weights= pretrained_weights["workshop_bias"])
-MLP_model.train(epoch=int(1e7), learning_rate=0.0002, batch_size=32, error_threshold=0.01, momentum_factor=0.90, iteration_to_print=100, show_plot=True)
+MLP_model.train(epoch=int(1e6), learning_rate=0.0004, batch_size=32, error_threshold=0.01, momentum_factor=0.95, iteration_to_print=100, show_plot=False)
 
 
 
