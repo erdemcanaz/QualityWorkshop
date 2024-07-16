@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 import torch
 
-def main():
+def train_model():
     print(f" torch.cuda.device_count(): {torch.cuda.device_count()}")
     torch.cuda.set_device(0) # Set to your desired GPU number
 
@@ -44,4 +44,4 @@ def main():
     )
 
 if __name__ == '__main__':
-    main()
+    train_model()
