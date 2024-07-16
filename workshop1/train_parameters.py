@@ -250,7 +250,7 @@ pretrained_weights = {
 
 }
 MLP_model = MLP(data, weights= pretrained_weights["workshop_bias"])
-MLP_model.train(epoch=int(1e6), learning_rate=0.0004, batch_size=32, error_threshold=0.01, momentum_factor=0.95, iteration_to_print=100, show_plot=False)
+MLP_model.train(epoch=int(1e6), learning_rate=0.0002, batch_size=32, error_threshold=0.01, momentum_factor=0.95, iteration_to_print=100, show_plot=False)
 
 
 
