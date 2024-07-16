@@ -1,0 +1,6 @@
+data/*
+!data/images/.gitkeep
+!data/labels/.gitkeep
+
+training_results/*
+!training_results/.gitkeep
