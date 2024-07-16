@@ -6,8 +6,8 @@ names: ['soup',"noodle"]
 
 # Paths to training and validation data
 # Replace 'path/to/train/images' and 'path/to/val/images' with actual paths to your datasets
-train:  C:/Users/Levovo20x/Documents/GitHub/QualityWorkshop/workshop2/data/imagess # path to training images
-val:   C:/Users/Levovo20x/Documents/GitHub/QualityWorkshop/workshop2/data/imagess # path to validation images
+train:  C:/Users/Levovo20x/Documents/GitHub/QualityWorkshop/workshop2/data/images # path to training images
+val:   C:/Users/Levovo20x/Documents/GitHub/QualityWorkshop/workshop2/data/images # path to validation images
 
 # Additional parameters can be included as needed
 # For instance, anchor sizes, hyperparameters, etc.

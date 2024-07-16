@@ -26,17 +26,20 @@ def main():
     experiment = input("Enter the name of your experiment: ")
     save_dir = input("Enter the path to your save directory: ")
     yaml_file = input("Enter the path to your yaml file: ")
+    number_of_epochs = int(input("Enter the number of epochs: "))
+    save_period = int(input("Enter the save period: "))
+    batch_size = int(input("Enter the batch size: "))
 
     model.train(
         data=yaml_file,
-        #classes = [0,1,3],
-        epochs=200, 
+        #classes = [0,1,3], #which classes to train for
+        epochs=number_of_epochs,
         save_dir=save_dir,
         project=save_dir,
         name=experiment,
         imgsz=640,
-        save_period = 25,
-        batch = 8,
+        save_period = save_period,
+        batch = batch_size,
         plots = True
     )
 
